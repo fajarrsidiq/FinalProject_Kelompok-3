@@ -15,5 +15,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pegawai', PegawaiController::class);
 });
 
+Route::middleware(['auth', 'role:gudang,manager,owner'])->prefix('stok')->name('stok.')->group(function () {
+    Route::get('/', [StokController::class, 'index'])->name('index');
+    Route::get('/mutasi', [StokController::class, 'mutasi'])->name('mutasi');
+    Route::post('/mutasi/store', [StokController::class, 'storeMutasi'])->name('mutasi.store');
+});
+
+
 
 require __DIR__.'/auth.php';
